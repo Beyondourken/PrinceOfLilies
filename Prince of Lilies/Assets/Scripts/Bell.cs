@@ -3,10 +3,11 @@ using System.Collections;
 
 public class Bell : MonoBehaviour {
 	
-	private GameObject player;              // Reference to the player.
+	//private GameObject player;              // Reference to the player.
 	public GameObject setTargetOn;
+	public GameObject ikController;
 
-	
+	private bool isBellRung = false;
 	
 
 	
@@ -15,9 +16,12 @@ public class Bell : MonoBehaviour {
 		// If the colliding gameobject is the player...
 		if (col.CompareTag("Player")) {
 			// ... and the switch button is pressed...
-			if (Input.GetButton ("Submit")) {
-				
+			if (Input.GetButton ("Submit") && !isBellRung) {
+				isBellRung = true;
+				ikController.SendMessage("SetTarget",transform); //player hand to bell
+				ikController.SendMessage("SetEnabled");
 				RingBell ();
+				StartCoroutine(Waiting());
 
 			}
 		}
@@ -27,10 +31,18 @@ public class Bell : MonoBehaviour {
 	void RingBell ()
 	{
 
-		// Play allarm bell audio clip.
+		// Play alarm bell audio clip.
 		GetComponent<AudioSource>().Play();
-		setTargetOn.SendMessage("SetTarget", transform);
 	
+				
+	
+	}
+	IEnumerator Waiting() {
+		yield return new WaitForSeconds(.5f);
+		
+		ikController.SendMessage("SetEnabled");  //player detach from bell
+		setTargetOn.SendMessage ("SetTarget", transform); //send guard to bell
+		isBellRung = false;
 	}
 
 }
