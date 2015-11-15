@@ -8,7 +8,7 @@ public class Bell : MonoBehaviour {
 	public GameObject ikController;
 
 	private bool isBellRung = false;
-	
+	private Transform clapper;
 
 	
 	void OnTriggerStay (Collider col)
@@ -17,8 +17,16 @@ public class Bell : MonoBehaviour {
 		if (col.CompareTag("Player")) {
 			// ... and the switch button is pressed...
 			if (Input.GetButton ("Submit") && !isBellRung) {
-				isBellRung = true;
-				ikController.SendMessage("SetTarget",transform); //player hand to bell
+				isBellRung = true; 
+
+				foreach (Transform t in transform)
+				{
+					if(t.name == "Clapper") {
+						clapper = t.transform;
+					}
+				}
+
+				ikController.SendMessage("SetTarget",clapper); //player hand to bell
 				ikController.SendMessage("SetEnabled");
 				RingBell ();
 				StartCoroutine(Waiting());
@@ -33,6 +41,7 @@ public class Bell : MonoBehaviour {
 
 		// Play alarm bell audio clip.
 		GetComponent<AudioSource>().Play();
+		GetComponent<Animator> ().SetBool ("IsRinging", true);
 	
 				
 	
@@ -43,6 +52,7 @@ public class Bell : MonoBehaviour {
 		ikController.SendMessage("SetEnabled");  //player detach from bell
 		setTargetOn.SendMessage ("SetTarget", transform); //send guard to bell
 		isBellRung = false;
+		GetComponent<Animator> ().SetBool ("IsRinging", false);
 	}
 
 }
