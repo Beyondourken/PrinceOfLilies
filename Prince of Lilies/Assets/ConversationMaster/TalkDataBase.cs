@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class TalkDataBase : MonoBehaviour {
 
+	//populates conversation database
+
 	public List<Talk> talkList = new List<Talk>();
     // Use this for initialization
  //  List<string> response = new List<string>();
@@ -13,7 +15,9 @@ public class TalkDataBase : MonoBehaviour {
 		//response.Add("OK");
 	//	nextID.Add(0);
 		//talkList.Add (new Talk (101,"Guard", "You can not enter here", response, nextID ));
-        talkList.Add(new Talk(101, "Guard", "You can not enter here","OK", 0, "Understood", 0, "Sorry", 0));
+		talkList.Add(new Talk(101, "Guard", "You can not enter here","OK", 0,false,  "Understood", 0, false, "Sorry", 1, false));
+		talkList.Add (new Talk (102,"Guard", "This bell is for emergencies only", "Very Sorry", 2,false, "This is an emergency", 2,false, "This is an emergency", 2,false ));
+		talkList.Add (new Talk (102,"Guard", "If you ring that again I will throw you in the dungeons", "Help!", 0,false, "Oh no! Not the dungeons.", 0,false, "Oh no! Not the dungeons.", 0,false ));
         /*	response.Clear();
             response.Add("Sorry");
             response.Add("I won't do it again");

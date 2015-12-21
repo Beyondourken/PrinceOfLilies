@@ -2,37 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
+//using UnityEngine.EventSystems;
 
 public class Conversation : MonoBehaviour {
 
-	public GameObject talkSlots;
-	public GameObject responseSlots;
+	//manages conversations
+
+//	public GameObject talkSlots;
+//	public GameObject responseSlots;
 
 
-	public Talk talk;   //current conversation
-	public List<GameObject> responses = new List<GameObject>();
-	public List<Talk> talks = new List<Talk>();
+//	public Talk talk;   //current conversation
+//	public List<GameObject> responses = new List<GameObject>();
+//	public List<Talk> talks = new List<Talk>();
 
 	TalkDataBase database;
 
-	Image speakerImage;
-	Text speakerSpeech;
-	Text response;
+	public Image speakerImage;
+	public Text speakerSpeech;
+//	Text response;
+	public Button response1;
+	public Button response2;
+	public Button response3;
 
 	int currentTalk = 0;
 
 	// Use this for initialization
-	void Start () {
+/*	void Start () {
 
 		database = GameObject.FindGameObjectWithTag ("TalkDatabase").GetComponent<TalkDataBase>();
 		int x = 2;
 		int y = 36;
-		GameObject talkSlot = (GameObject) Instantiate(talkSlots);
+	//	GameObject talkSlot = (GameObject) Instantiate(talkSlots);
 		talks.Add(new Talk());
-		talkSlot.transform.SetParent(this.gameObject.transform);
-		talkSlot.GetComponent<RectTransform>().localPosition = new Vector3(x,y,0);
-		talkSlot.name = "" +0;
+	//	talkSlot.transform.SetParent(this.gameObject.transform);
+	//	talkSlot.GetComponent<RectTransform>().localPosition = new Vector3(x,y,0);
+	//	talkSlot.name = "" +0;
 		y += -60;
 	
 
@@ -55,6 +61,8 @@ public class Conversation : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		talk = database.talkList [currentTalk];
+
 		if (talk != null) {
 			speakerImage.enabled = true;
 			speakerImage.sprite = talk.talkSpeaker;
@@ -84,8 +92,8 @@ public class Conversation : MonoBehaviour {
 	
 	}
 
-
-	void AddTalk(int id) {
+*/
+/*	void AddTalk(int id) {
 
 		for (int i = 0; i < database.talkList.Count; i++) {
 			if (database.talkList[i].talkID == id) {
@@ -94,5 +102,11 @@ public class Conversation : MonoBehaviour {
 				break;
 			}
 		}
+	}
+	*/
+
+	public void SetCurrentTalk(int nextTalk) {
+		Debug.Log ("NextTalk " + nextTalk);
+		currentTalk = nextTalk;
 	}
 }
