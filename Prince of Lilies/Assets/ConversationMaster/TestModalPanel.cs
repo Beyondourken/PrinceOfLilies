@@ -4,10 +4,14 @@ using UnityEngine.Events;
 using System.Collections;
 
 public class TestModalPanel : MonoBehaviour {
+	
 
 	public Sprite icon;
 	private ModalPanel modalPanel;
 
+	TalkDataBase database;   //*************************
+	Talk talk;   //current conversation ******************************
+	int currentTalk = 0; //**************************************************************
 //	private UnityAction myResponse1Action;
 //	private UnityAction myResponse2Action;
 //	private UnityAction myResponse3Action;
@@ -15,6 +19,8 @@ public class TestModalPanel : MonoBehaviour {
 	void Awake() {
 
 		modalPanel = ModalPanel.Instance ();
+
+		database = GameObject.FindGameObjectWithTag ("TalkDatabase").GetComponent<TalkDataBase>(); //********************************
 
 	//	myResponse1Action = new UnityAction (TestResponse1);
 	//	myResponse2Action = new UnityAction (TestResponse2);
@@ -33,17 +39,38 @@ public class TestModalPanel : MonoBehaviour {
 		modalPanel.Choice ("This is the guard\nPlease test the buttons below", icon, TestResponse1, TestResponse2,TestResponse3);
 	}
 
+	public void TestButtonsText() {
+		talk = database.talkList [currentTalk];
+		modalPanel.Choice ( talk.talkSpeech, icon, talk.talkResponse, TestResponse1, talk.talkResponse1,TestResponse2,talk.talkResponse2,TestResponse3);
+	}
+
 	//these are wrapped into unity actions
 
 	void TestResponse1() {
 		Debug.Log ("Response1");
+		Debug.Log (talk.isImmediate);
+		currentTalk = talk.talkNextID;
+		if (talk.isImmediate) {
+			TestButtonsText (); 
+		}
 	}
 
 	void TestResponse2() {
 		Debug.Log ("Response2");
+		Debug.Log (talk.isImmediate1);
+		currentTalk = talk.talkNextID1;
+		if (talk.isImmediate1) {
+			TestButtonsText (); 
+		}
 	}
 	void TestResponse3() {
 		Debug.Log ("Response3");
+		Debug.Log (talk.isImmediate2);
+		currentTalk = talk.talkNextID2;
+		if (talk.isImmediate2== true) {
+			Debug.Log ("immediate");
+			TestButtonsText (); 
+		}
 	}
 
 }

@@ -7,12 +7,12 @@ public class Talk {
 
 	// creates conversation database
 
-	public int talkID;
-	public Sprite talkSpeaker;
-	public string talkSpeech;
-	public string talkResponse;
-	public int talkNextID;
-	public bool isImmediate;
+	public int talkID;              //ID to indicate position in conversation, some ID will be used for actions?
+	public Sprite talkSpeaker;		//image of character speaking
+	public string talkSpeech;		//what the character says
+	public string talkResponse;		//a possible player reply to character
+	public int talkNextID;			//the next remark/ action that will occur if this response is selected
+	public bool isImmediate;		//true if next remark or action should be carried out immediately
 	public string talkResponse1;
 	public int talkNextID1;
 	public bool isImmediate1;

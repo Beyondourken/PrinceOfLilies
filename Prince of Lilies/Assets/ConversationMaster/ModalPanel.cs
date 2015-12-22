@@ -81,6 +81,38 @@ public class ModalPanel : MonoBehaviour {
 
 	}
 
+	// A string, an image and three possible responses with text
+	public void Choice( string speech, Sprite speakerImage, string response1Text, UnityAction response1Event,string response2Text, UnityAction response2Event,string response3Text, UnityAction response3Event) {
+		modalPanelObject.SetActive (true);
+
+		response1.onClick.RemoveAllListeners ();
+		response1.onClick.AddListener (response1Event);
+		response1.onClick.AddListener (ClosePanel);
+
+		response2.onClick.RemoveAllListeners ();
+		response2.onClick.AddListener (response2Event);
+		response2.onClick.AddListener (ClosePanel);
+
+		response3.onClick.RemoveAllListeners ();
+		response3.onClick.AddListener (response3Event);
+		response3.onClick.AddListener (ClosePanel);
+
+		this.speakerSpeech.text = speech;
+		this.speakerImage.sprite = speakerImage;
+		this.response1.GetComponentInChildren<Text>().text  = response1Text;
+		this.response2.GetComponentInChildren<Text>().text  = response2Text;
+		this.response3.GetComponentInChildren<Text>().text  = response3Text;
+
+		this.speakerImage.gameObject.SetActive (true);
+		this.response1.gameObject.SetActive (true);
+		this.response2.gameObject.SetActive (true);
+		this.response3.gameObject.SetActive (true);
+
+
+
+	}
+
+
 
 	void ClosePanel() {
 		
