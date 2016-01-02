@@ -6,7 +6,7 @@ public class Bell : MonoBehaviour {
 	//private GameObject player;              // Reference to the player.
 	public GameObject setTargetOn;
 	public GameObject ikController;
-
+	public Transform guardPosition;
 	private bool isBellRung = false;
 	private Transform clapper;
 
@@ -30,6 +30,7 @@ public class Bell : MonoBehaviour {
 				ikController.SendMessage("SetEnabled");
 				RingBell ();
 				StartCoroutine(Waiting());
+				StartCoroutine(GuardReturn());
 
 			}
 		}
@@ -51,8 +52,16 @@ public class Bell : MonoBehaviour {
 		
 		ikController.SendMessage("SetEnabled");  //player detach from bell
 		setTargetOn.SendMessage ("SetTarget", transform); //send guard to bell
+		setTargetOn.SendMessage("BellRung"); //Guard talks about bell
 		isBellRung = false;
 		GetComponent<Animator> ().SetBool ("IsRinging", false);
+	}
+	IEnumerator GuardReturn() {
+		//print ("wait started");
+		yield return new WaitForSeconds(7f);
+	//	print ("guard return triggered");
+		setTargetOn.SendMessage ("SetTarget", guardPosition); //send guard to bell
+	//	print ("guard target set");
 	}
 
 }
