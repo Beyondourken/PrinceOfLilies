@@ -4,6 +4,7 @@ using System.Collections;
 public class Bell : MonoBehaviour {
 	
 	//private GameObject player;              // Reference to the player.
+	public GameObject barrier;
 	public GameObject setTargetOn;
 	public GameObject ikController;
 	public Transform guardPosition;
@@ -48,20 +49,25 @@ public class Bell : MonoBehaviour {
 	
 	}
 	IEnumerator Waiting() {
-		yield return new WaitForSeconds(.5f);
-		
+		yield return new WaitForSeconds(.2f);
+
 		ikController.SendMessage("SetEnabled");  //player detach from bell
 		setTargetOn.SendMessage ("SetTarget", transform); //send guard to bell
 		setTargetOn.SendMessage("BellRung"); //Guard talks about bell
+		Collider col = barrier.GetComponent<Collider>();
+		col.enabled = false;
+	
 		isBellRung = false;
 		GetComponent<Animator> ().SetBool ("IsRinging", false);
 	}
 	IEnumerator GuardReturn() {
 		//print ("wait started");
-		yield return new WaitForSeconds(7f);
+		yield return new WaitForSeconds(10f);
 	//	print ("guard return triggered");
 		setTargetOn.SendMessage ("SetTarget", guardPosition); //send guard to bell
-	//	print ("guard target set");
+		Collider col = barrier.GetComponent<Collider>();
+		col.enabled = true;
+		print ("guard target set");
 	}
 
 }
